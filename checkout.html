@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Procesar Pago - Studio Creativo Pixel</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            display: ['Space Grotesk', 'sans-serif'],
+            body: ['Outfit', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
+          colors: {
+            px: { base: '#080B14', surface: '#0F1221', elevated: '#161A2E', overlay: '#1C2038', cyan: '#00E5FF', purple: '#7C3AED', green: '#00FF00', pink: '#FF2D78', text: '#E8EDF5', muted: '#8B97B3', faint: '#4A5568' }
+          }
+        }
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    /* Dot grid background pattern */
+    body {
+      background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+      background-size: 24px 24px;
+      background-position: 0 0;
+      background-color: #0B0E17;
+    }
+
+    .checkout-input {
+      background: var(--elevated);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 4px;
+      color: var(--text-primary);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      padding: 14px;
+      width: 100%;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .checkout-input:focus {
+      border-color: var(--primary);
+    }
+
+    .checkout-input::placeholder {
+      color: #3A4556;
+    }
+
+    .checkout-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 0.1em;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      margin-bottom: 8px;
+      display: block;
+    }
+
+    .step-badge {
+      background: #00FF00;
+      color: #000;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 14px;
+      font-weight: bold;
+      padding: 2px 6px;
+      margin-right: 12px;
+    }
+
+    .payment-card {
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      background: transparent;
+      transition: all 0.2s;
+      cursor: pointer;
+      position: relative;
+      padding: 20px;
+    }
+
+    .payment-card.active {
+      border-color: #00FF00;
+    }
+
+    .payment-card-badge {
+      display: none;
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      width: 14px;
+      height: 14px;
+      background: #00FF00;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .payment-card.active .payment-card-badge {
+      display: flex;
+    }
+  </style>
+</head>
+
+<body class="dark text-px-text min-h-screen">
+
+  <!-- NAVBAR SIMPLE -->
+  <nav class="h-[70px] flex items-center justify-between px-10 border-b border-white border-opacity-[0.03] bg-px-base">
+    <a href="index.html" class="flex items-center gap-3 no-underline">
+      <span class="font-display font-bold text-base md:text-lg text-white tracking-wide">
+        Studio <span class="text-px-cyan">Creativo</span> Pixel
+      </span>
+    </a>
+    <div class="hidden md:flex gap-6 font-body text-sm">
+      <a href="index.html" class="text-px-muted hover:text-px-purple transition">Inicio</a>
+      <a href="servicios.html" class="text-px-muted hover:text-px-purple transition">Servicios</a>
+      <a href="catalogo.html" class="text-px-muted hover:text-px-purple transition">Catálogo</a>
+      <a href="#" class="text-px-cyan border-b border-px-cyan pb-1 font-medium transition cursor-default">Carrito</a>
+    </div>
+    <div
+      class="w-8 h-8 rounded-full border border-px-cyan border-opacity-50 text-px-cyan flex items-center justify-center">
+      <i data-lucide="user" class="w-4 h-4"></i>
+    </div>
+  </nav>
+
+  <main class="max-w-[1200px] mx-auto px-6 py-12">
+    <!-- Header -->
+    <div class="mb-14">
+      <span class="font-mono text-[10px] font-bold text-px-green uppercase tracking-[0.2em] block mb-3">CHECKOUT
+        TERMINAL V2.4</span>
+      <h1 class="font-display font-bold text-5xl md:text-6xl m-0 uppercase tracking-tight flex items-end">
+        Procesar Pago<span class="text-px-cyan leading-[0] ml-1 mb-2.5">.</span>
+      </h1>
+    </div>
+
+    <!-- Main Content -->
+    <div class="flex flex-col lg:flex-row gap-16">
+      <!-- Izquierda Formulario -->
+      <div class="flex-1">
+
+        <!-- MÉTODOS DE PAGO -->
+        <div class="mb-14">
+          <div class="flex items-center mb-8 border-b border-white border-opacity-[0.03] pb-4">
+            <span class="step-badge">01</span>
+            <h2 class="font-display font-bold text-xl uppercase tracking-widest text-white m-0">MÉTODO DE PAGO</h2>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="payment-card" onclick="selectPayment(0)" id="pay-0">
+              <i data-lucide="building" class="w-8 h-8 text-white mb-6"></i>
+              <div class="payment-card-badge"><i data-lucide="check" class="w-3 h-3 text-black"></i></div>
+              <h3 class="font-display font-bold text-base text-white m-0 mb-1">PSE (Débito)</h3>
+              <p class="font-mono text-[10px] text-px-faint m-0 uppercase">TRANSFERENCIA INSTANTÁNEA</p>
+            </div>
+
+            <div class="payment-card active" onclick="selectPayment(1)" id="pay-1">
+              <i data-lucide="credit-card" class="w-8 h-8 text-px-green mb-6"></i>
+              <div class="payment-card-badge"><i data-lucide="check" class="w-3 h-3 text-black"></i></div>
+              <h3 class="font-display font-bold text-base text-px-green m-0 mb-1">Tarjeta de Crédito / Débito</h3>
+              <p class="font-mono text-[10px] text-px-muted m-0 uppercase">VISA, MASTERCARD, AMEX</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- DETALLES DE FACTURACIÓN -->
+        <div>
+          <div class="flex items-center mb-8 border-b border-white border-opacity-[0.03] pb-4">
+            <span class="step-badge">02</span>
+            <h2 class="font-display font-bold text-xl uppercase tracking-widest text-white m-0">DETALLES DE FACTURACIÓN
+            </h2>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-8">
+            <div>
+              <label class="checkout-label">NOMBRE DEL TITULAR</label>
+              <input type="text" class="checkout-input" placeholder="EJ: JUAN PÉREZ">
+            </div>
+            <div>
+              <label class="checkout-label">NÚMERO DE DOCUMENTO</label>
+              <input type="text" class="checkout-input" placeholder="ID / NIT">
+            </div>
+            <div class="md:col-span-2">
+              <label class="checkout-label">CORREO ELECTRÓNICO</label>
+              <input type="email" class="checkout-input" placeholder="USUARIO@EMAIL.COM">
+            </div>
+            <div class="md:col-span-2">
+              <label class="checkout-label">NÚMERO DE TARJETA</label>
+              <div class="relative">
+                <input type="text" class="checkout-input" placeholder="XXXX XXXX XXXX XXXX">
+                <i data-lucide="credit-card" class="absolute right-4 top-[14px] w-5 h-5 text-px-cyan opacity-40"></i>
+              </div>
+            </div>
+            <div>
+              <label class="checkout-label">VENCIMIENTO</label>
+              <input type="text" class="checkout-input" placeholder="MM/YY">
+            </div>
+            <div>
+              <label class="checkout-label">CVC / CVV</label>
+              <input type="password" class="checkout-input" placeholder="***" maxlength="4">
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Derecha Resumen -->
+      <div class="w-full lg:w-[480px]">
+        <div class="bg-px-surface border-l-4 border-px-green p-10 relative">
+          <h2 class="font-display font-bold text-2xl uppercase text-white m-0 mb-10 tracking-widest">RESUMEN DEL PEDIDO
+          </h2>
+
+          <!-- Lista de productos desde JS, por ahora mocks en markup -->
+          <div id="checkout-items-list" class="flex flex-col gap-6 mb-12">
+            <!-- Items injected by JS -->
+          </div>
+
+          <!-- Totales -->
+          <div class="flex justify-between font-mono text-[11px] text-px-muted mb-4 tracking-widest uppercase">
+            <span>SUBTOTAL</span><span id="chk-sub">$0</span>
+          </div>
+          <div class="flex justify-between font-mono text-[11px] text-px-muted mb-4 tracking-widest uppercase">
+            <span>IVA (19%)</span><span id="chk-iva">$0</span>
+          </div>
+          <div
+            class="flex justify-between font-mono text-[11px] font-bold text-px-green mb-8 tracking-widest uppercase">
+            <span>DESCUENTO PIXEL (5%)</span><span id="chk-disc" class="text-px-green">-$0</span>
+          </div>
+
+          <div class="border-t border-white border-opacity-[0.05] pt-8 mb-8 pb-8 border-b">
+            <span class="checkout-label">TOTAL A PAGAR</span>
+            <div class="flex items-baseline gap-2">
+              <span id="chk-total" class="font-display font-bold text-5xl text-white tracking-tight">$0</span>
+              <span class="font-mono text-xs text-px-muted">COP</span>
+            </div>
+          </div>
+
+          <button
+            class="w-full bg-px-green text-black font-display font-bold text-lg py-5 flex items-center justify-center gap-3 transition-transform hover:-translate-y-1 hover:shadow-[0_0_35px_rgba(0,255,0,0.5)]"
+            onclick="processPayment()">
+            PAGAR AHORA <i data-lucide="arrow-right" class="w-5 h-5"></i>
+          </button>
+
+          <div class="flex items-center justify-center gap-2 mt-6">
+            <i data-lucide="shield-check" class="w-3 h-3 text-px-green"></i>
+            <span class="font-mono text-[9px] text-px-faint tracking-widest uppercase">TRANSACCIÓN SEGURA Y CIFRADA
+              AES-256</span>
+          </div>
+        </div>
+
+        <!-- Priority Support Card -->
+        <div
+          class="mt-8 bg-px-base border border-white border-opacity-[0.03] p-6 flex gap-6 items-center overflow-hidden relative group">
+          <div
+            class="absolute -right-4 -bottom-4 text-px-elevated opacity-50 group-hover:scale-110 transition-transform">
+            <i data-lucide="zap" class="w-24 h-24"></i>
+          </div>
+          <img src="Assets/logo_bg_black.svg"
+            class="w-16 h-16 opacity-30 object-contain mix-blend-screen bg-px-elevated rounded-lg p-2" alt="Soporte">
+          <div class="relative z-10">
+            <h4 class="font-display font-bold text-[11px] text-px-green uppercase tracking-widest m-0 mb-1">SOPORTE
+              PRIORITY</h4>
+            <p class="font-mono text-[9px] text-px-faint uppercase tracking-widest m-0 leading-relaxed">CHAT 24/7
+              DISPONIBLE PARA ESTE PEDIDO</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <!-- ═══ FOOTER ═══ -->
+  <footer class="border-t border-white border-opacity-[0.05] pt-14 pb-8 px-6 bg-px-base mt-20">
+    <div class="max-w-[1200px] mx-auto grid grid-cols-1 md:grid-cols-4 gap-10 mb-10 text-left">
+      <!-- Logo col -->
+      <div class="flex flex-col items-start gap-5">
+        <a href="index.html" class="no-underline">
+          <img src="Assets/Chartlogo.svg" alt="Logo Studio Pixel" class="h-20 w-20 rounded-2xl shadow-[0_0_30px_rgba(0,229,255,0.15)]">
+        </a>
+        <p class="font-body text-xs text-px-faint max-w-[250px] leading-relaxed footer-link transition-colors">
+          Plataforma de sublimación, diseño y producción premium. Llevamos tu identidad visual a soportes físicos con precisión extrema.
+        </p>
+      </div>
+
+      <!-- Explorar -->
+      <div>
+        <h4 class="font-display font-bold text-sm text-white mb-5">Explorar</h4>
+        <ul class="flex flex-col gap-3">
+          <li><a href="index.html" class="font-body text-sm text-px-faint hover:text-px-green transition-colors">Inicio</a></li>
+          <li><a href="servicios.html" class="font-body text-sm text-px-faint hover:text-px-green transition-colors">Servicios</a></li>
+          <li><a href="catalogo.html" class="font-body text-sm text-px-faint hover:text-px-green transition-colors">Catálogo</a></li>
+        </ul>
+      </div>
+
+      <!-- Legal -->
+      <div>
+        <h4 class="font-display font-bold text-sm text-white mb-5">Legal</h4>
+        <ul class="flex flex-col gap-3">
+          <li><a href="#" class="font-body text-sm text-px-faint hover:text-px-green transition-colors">Términos y condiciones</a></li>
+          <li><a href="#" class="font-body text-sm text-px-faint hover:text-px-green transition-colors">Política de privacidad</a></li>
+          <li><a href="#" class="font-body text-sm text-px-faint hover:text-px-green transition-colors">Uso de cookies</a></li>
+        </ul>
+      </div>
+
+      <!-- Social -->
+      <div>
+        <h4 class="font-display font-bold text-sm text-white mb-5">Social</h4>
+        <div class="flex items-center gap-5">
+          <a href="#" class="footer-icon-wrap" aria-label="Instagram">
+            <img src="Assets/Instagram_Glyph_White.svg" class="w-6 h-6" alt="Instagram">
+          </a>
+          <a href="#" class="footer-icon-wrap" aria-label="Facebook">
+            <img src="Assets/Facebook_Logo_Secondary.png" class="w-6 h-6 object-contain" alt="Facebook">
+          </a>
+          <a href="#" class="footer-icon-wrap" aria-label="X (Twitter)">
+            <img src="Assets/logo-white.png" class="w-6 h-6 object-contain" alt="X">
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="max-w-[1200px] mx-auto border-t border-white border-opacity-[0.05] pt-6 flex flex-col md:flex-row items-center justify-between gap-4">
+      <p class="font-mono text-[11px] text-px-faint m-0">© 2026 Studio Creativo Pixel. Todos los derechos reservados.</p>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+  <script>
+    lucide.createIcons();
+
+    function selectPayment(id) {
+      document.querySelectorAll('.payment-card').forEach(el => {
+        el.classList.remove('active');
+        const tit = el.querySelector('h3');
+        if (tit) tit.classList.remove('text-px-cyan');
+        if (tit) tit.classList.add('text-white');
+        const iCon = el.querySelector('i[data-lucide]:not(.text-black)');
+        if (iCon) { iCon.classList.remove('text-px-cyan'); iCon.classList.add('text-white'); }
+      });
+
+      const target = document.getElementById('pay-' + id);
+      target.classList.add('active');
+      const targetTitle = target.querySelector('h3');
+      const targetIcon = target.querySelector('i[data-lucide]:not(.text-black)');
+      if (targetTitle) { targetTitle.classList.remove('text-white'); targetTitle.classList.add('text-px-green'); }
+      if (targetIcon) { targetIcon.classList.remove('text-white'); targetIcon.classList.add('text-px-green'); }
+    }
+
+    // Load existing items from cart
+    document.addEventListener('DOMContentLoaded', () => {
+      const wrapper = document.getElementById('checkout-items-list');
+      if (!cart || cart.length === 0) {
+        wrapper.innerHTML = '<p class="font-mono text-[11px] text-px-muted uppercase tracking-widest text-center py-4">TU CARRITO ESTÁ VACÍO.</p>';
+        return;
+      }
+
+      wrapper.innerHTML = cart.map(i => `
+          <div>
+            <div class="flex justify-between items-start mb-1">
+               <h3 class="font-display font-bold text-[13px] uppercase tracking-wide text-white m-0 max-w-[200px] truncate" title="${i.name}">${i.name} <span class="text-px-faint ml-1">x${i.qty}</span></h3>
+               <span class="font-mono text-[13px] font-bold text-px-cyan">${formatCOP(i.price * i.qty)}</span>
+            </div>
+            <p class="font-mono text-[10px] text-px-muted uppercase tracking-widest m-0">SKU-${i.id.toString().padStart(6, '0')} PIXEL ASSET</p>
+          </div>
+       `).join('');
+
+      let totalCost = cart.reduce((no, it) => no + (it.price * it.qty), 0);
+      let discount = Math.round(totalCost * 0.05);
+      let iva = Math.round((totalCost - discount) * 0.19);
+      document.getElementById('chk-sub').textContent = formatCOP(totalCost);
+      document.getElementById('chk-disc').textContent = '-' + formatCOP(discount);
+      document.getElementById('chk-iva').textContent = formatCOP(iva);
+      document.getElementById('chk-total').textContent = formatCOP(totalCost - discount + iva);
+    });
+
+    function processPayment() {
+      if (cart.length === 0) {
+        alert('Agrega items al carrito primero');
+        return;
+      }
+      alert('Pago simulado con éxito.');
+      cart = [];
+      localStorage.removeItem('scp_cart_v1');
+      window.location.href = 'index.html';
+    }
+  </script>
+</body>
+
+</html>
