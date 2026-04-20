@@ -9,9 +9,9 @@
   --base: #080B14;
   --surface: #0F1221;
   --elevated: #161A2E;
-  --text-primary: #E8EDF5;
-  --text-muted: #8B97B3;
-  --border-default: rgba(255, 255, 255, 0.06);
+  --text-primary: #FFFFFF;
+  --text-muted: #D1D9E6;
+  --border-default: rgba(255, 255, 255, 0.08);
 }
 
 body {
@@ -130,8 +130,8 @@ h6 {
 }
 
 .btn-icon:hover {
-  background: rgba(255, 255, 255, 0.06);
-  color: var(--text-primary);
+  background: rgba(255, 255, 255, 0.1);
+  color: #FFFFFF;
 }
 
 /* --- Nav Links Hover --- */
@@ -166,7 +166,7 @@ h6 {
 }
 
 .field-input::placeholder {
-  color: #4A5568;
+  color: #718096;
 }
 
 /* --- Cards --- */
@@ -422,4 +422,14 @@ h6 {
 .service-text-group:hover span {
   color: #00FF00 !important;
   transition: color 0.3s ease;
+}
+
+/* ═══ CART BUTTON HOVER ═══ */
+#cart-btn:hover {
+  color: #FFFFFF !important;
+  background: rgba(255, 255, 255, 0.1) !important;
+}
+
+.nav-link:hover {
+  color: #FFFFFF !important;
 }

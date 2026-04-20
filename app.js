@@ -125,18 +125,21 @@ function renderCart() {
             </div>
             <div style="flex:1;min-width:0;">
                 <div style="display:flex;justify-content:space-between;align-items:flex-start;">
-                    <h4 style="font-family:'Space Grotesk',sans-serif;font-size:14px;color:#E8EDF5;margin:0 0 4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;" title="${item.name}">${item.name}</h4>
-                    <button onclick="removeCartItem(${item.id})" style="background:none;border:none;color:#4A5568;cursor:pointer;padding:2px;margin-left:8px;flex-shrink:0;">
+                    <h4 style="font-family:'Space Grotesk',sans-serif;font-size:14px;color:#FFFFFF;margin:0 0 4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;" title="${item.name}">${item.name}</h4>
+                    <button onclick="removeCartItem(${item.id})" style="background:none;border:none;color:#94A3B8;cursor:pointer;padding:2px;margin-left:8px;flex-shrink:0;"
+                            onmouseover="this.style.color='#FF4D6A'" onmouseout="this.style.color='#94A3B8'">
                         <i data-lucide="trash-2" style="width:16px;height:16px;"></i>
                     </button>
                 </div>
                 <div style="display:flex;align-items:center;justify-content:space-between;margin-top:10px">
                     <div style="display:flex;align-items:center;background:#161A2E;border:1px solid rgba(255,255,255,0.06);border-radius:6px;overflow:hidden;">
-                        <button onclick="updateCartQty(${item.id}, -1)" style="width:28px;height:28px;background:none;border:none;color:#8B97B3;cursor:pointer;display:flex;align-items:center;justify-content:center;">
+                        <button onclick="updateCartQty(${item.id}, -1)" style="width:28px;height:28px;background:none;border:none;color:#D1D9E6;cursor:pointer;display:flex;align-items:center;justify-content:center;"
+                                onmouseover="this.style.color='#FFFFFF'" onmouseout="this.style.color='#D1D9E6'">
                            <i data-lucide="minus" style="width:12px;height:12px;"></i>
                         </button>
                         <span style="font-family:'JetBrains Mono',monospace;font-size:12px;width:20px;text-align:center;color:white;">${item.qty}</span>
-                        <button onclick="updateCartQty(${item.id}, 1)" style="width:28px;height:28px;background:none;border:none;color:#8B97B3;cursor:pointer;display:flex;align-items:center;justify-content:center;">
+                        <button onclick="updateCartQty(${item.id}, 1)" style="width:28px;height:28px;background:none;border:none;color:#D1D9E6;cursor:pointer;display:flex;align-items:center;justify-content:center;"
+                                onmouseover="this.style.color='#FFFFFF'" onmouseout="this.style.color='#D1D9E6'">
                            <i data-lucide="plus" style="width:12px;height:12px;"></i>
                         </button>
                     </div>
@@ -230,9 +233,9 @@ window.authSwitchTab = function(tab) {
     if (!tabLogin || !tabRegister || !formLogin || !formRegister) return;
 
     // Tab styles
-    tabLogin.style.color            = isLogin ? '#00E5FF' : '#4A5568';
+    tabLogin.style.color            = isLogin ? '#00E5FF' : '#94A3B8';
     tabLogin.style.borderBottomColor= isLogin ? '#00E5FF' : 'transparent';
-    tabRegister.style.color            = isLogin ? '#4A5568' : '#00E5FF';
+    tabRegister.style.color            = isLogin ? '#94A3B8' : '#00E5FF';
     tabRegister.style.borderBottomColor= isLogin ? 'transparent' : '#00E5FF';
 
     // Panel visibility — use display, NOT hidden attr (avoids Tailwind override issues)

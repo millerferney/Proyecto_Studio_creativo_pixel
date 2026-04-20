@@ -20,7 +20,7 @@
             mono: ['JetBrains Mono', 'monospace'],
           },
           colors: {
-            px: { base: '#080B14', surface: '#0F1221', elevated: '#161A2E', overlay: '#1C2038', cyan: '#00E5FF', purple: '#7C3AED', green: '#00FF00', pink: '#FF2D78', text: '#E8EDF5', muted: '#8B97B3', faint: '#4A5568' }
+            px: { base: '#080B14', surface: '#0F1221', elevated: '#161A2E', overlay: '#1C2038', cyan: '#00E5FF', purple: '#7C3AED', green: '#00FF00', pink: '#FF2D78', text: '#FFFFFF', muted: '#D1D9E6', faint: '#94A3B8' }
           }
         }
       }
@@ -53,7 +53,7 @@
         <i data-lucide="search" class="w-4 h-4"></i><span class="text-sm font-body">Buscar...</span>
       </button>
       <button id="cart-btn" onclick="openCart()"
-        class="relative flex items-center justify-center w-10 h-10 hover:bg-white hover:bg-opacity-5 rounded-lg text-px-muted transition">
+        class="relative flex items-center justify-center w-10 h-10 hover:bg-white hover:bg-opacity-10 rounded-lg text-px-muted hover:text-white transition">
         <i data-lucide="shopping-cart" class="w-5 h-5"></i>
         <span id="cart-badge"
           class="absolute -top-1 -right-1 w-4 h-4 bg-px-cyan text-px-base text-[10px] font-mono font-bold rounded-full flex items-center justify-center animate-pop"
@@ -235,7 +235,7 @@
 
       <!-- X cerrar -->
       <button onclick="closeAuth()" aria-label="Cerrar" class="absolute top-4 right-4 w-8 h-8 rounded-lg flex items-center justify-center
-                     text-px-muted hover:text-white hover:bg-white hover:bg-opacity-5 transition-colors">
+                     text-px-muted hover:text-white hover:bg-white hover:bg-opacity-10 transition-colors">
         <i data-lucide="x" style="width:18px;height:18px"></i>
       </button>
 
@@ -248,7 +248,7 @@
         </button>
         <button id="auth-tab-register" onclick="authSwitchTab('register')"
           class="flex-1 py-4 font-display text-sm font-bold transition-colors"
-          style="color:#4A5568;border-bottom:2px solid transparent;background:none;border-top:none;border-left:none;border-right:none;cursor:pointer">
+          style="color:#94A3B8;border-bottom:2px solid transparent;background:none;border-top:none;border-left:none;border-right:none;cursor:pointer">
           Registrarse
         </button>
       </div>
@@ -354,10 +354,12 @@
       style="display:flex;align-items:center;justify-content:space-between;padding:20px;border-bottom:1px solid rgba(255,255,255,0.06);flex-shrink:0">
       <div>
         <h2 class="font-display text-xl font-bold m-0"><span style="color:#00FF88">Tu</span> Carrito.</h2>
-        <p id="cart-count-label" class="font-body text-[13px] m-0 mt-1" style="color:#8B97B3">0 ítems</p>
+        <p id="cart-count-label" class="font-body text-[13px] m-0 mt-1" style="color:#D1D9E6">0 ítems</p>
       </div>
       <button onclick="closeCart()" aria-label="Cerrar carrito"
-        style="width:36px;height:36px;border-radius:8px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.06);color:#8B97B3;display:flex;align-items:center;justify-content:center;cursor:pointer">
+        style="width:36px;height:36px;border-radius:8px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.1);color:#D1D9E6;display:flex;align-items:center;justify-content:center;cursor:pointer"
+        onmouseover="this.style.color='#FFFFFF';this.style.background='rgba(255,255,255,0.12)'"
+        onmouseout="this.style.color='#D1D9E6';this.style.background='rgba(255,255,255,0.08)'">
         <i data-lucide="x" style="width:18px;height:18px"></i>
       </button>
     </div>
@@ -370,8 +372,8 @@
         style="width:60px;height:60px;border-radius:16px;background:#161A2E;border:1px solid rgba(255,255,255,0.06);display:flex;align-items:center;justify-content:center;margin:0 auto 16px;color:#4A5568">
         <i data-lucide="shopping-cart" style="width:28px;height:28px"></i>
       </div>
-      <p class="font-display font-bold m-0 mb-1" style="color:#8B97B3">Tu carrito está vacío</p>
-      <p class="font-body text-[13px] m-0 mb-5" style="color:#4A5568">Agrega productos desde el catálogo</p>
+      <p class="font-display font-bold m-0 mb-1" style="color:#D1D9E6">Tu carrito está vacío</p>
+      <p class="font-body text-[13px] m-0 mb-5" style="color:#94A3B8">Agrega productos desde el catálogo</p>
       <a href="catalogo.html" class="btn-primary">Ver Catálogo</a>
     </div>
 
@@ -401,8 +403,8 @@
         Confirmar Pedido <i data-lucide="arrow-right" style="width:16px;height:16px"></i>
       </button>
       <button onclick="closeCart()"
-        style="width:100%;background:none;border:none;font-family:'Outfit',sans-serif;font-size:13px;color:#4A5568;cursor:pointer;padding:8px;transition:color 0.15s"
-        onmouseover="this.style.color='#E8EDF5'" onmouseout="this.style.color='#4A5568'">
+        style="width:100%;background:none;border:none;font-family:'Outfit',sans-serif;font-size:13px;color:#94A3B8;cursor:pointer;padding:8px;transition:color 0.15s"
+        onmouseover="this.style.color='#FFFFFF'" onmouseout="this.style.color='#94A3B8'">
         Seguir comprando
       </button>
     </div>
