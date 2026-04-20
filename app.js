@@ -170,13 +170,14 @@ function renderCart() {
     if(totalEl) totalEl.textContent = formatCOP(grand);
 }
 
-window.addToCart = function(id, name, price) {
+window.addToCart = function(id, name, price, qty = 1) {
     const existing = cart.find(i => i.id === id);
     if (existing) {
-        if (existing.qty < 5) existing.qty++;
-        else showToast('info', 'Límite máximo de 5 unidades por producto alcanzado.');
-    } else { 
-        cart.push({ id, name, price, qty: 1 }); 
+        const newQty = existing.qty + qty;
+        if (newQty <= 10) existing.qty = newQty;
+        else { existing.qty = 10; showToast('info', 'Límite máximo de 10 unidades por producto alcanzado.'); }
+    } else {
+        cart.push({ id, name, price, qty: Math.min(qty, 10) });
     }
     localStorage.setItem(CART_KEY, JSON.stringify(cart));
     updateCartBadge(cart.reduce((n,i) => n + i.qty, 0));
@@ -267,7 +268,107 @@ window.closeModal = function(id) {
     if (el) { el.classList.remove('is-open'); document.body.style.overflow = ''; }
 };
 
-// Simple Toasts
+// ── Toast Notification System ──────────────────────────────────
+(function createToastContainer() {
+    if (document.getElementById('toast-container')) return;
+    const style = document.createElement('style');
+    style.textContent = `
+        #toast-container {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            z-index: 99999;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            pointer-events: none;
+        }
+        .toast-item {
+            pointer-events: auto;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 14px 18px;
+            border-radius: 12px;
+            background: #0F1221;
+            border: 1px solid rgba(255,255,255,0.08);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.6);
+            font-family: 'Outfit', sans-serif;
+            font-size: 13px;
+            color: #D1D9E6;
+            min-width: 260px;
+            max-width: 360px;
+            transform: translateX(120%);
+            opacity: 0;
+            transition: transform 0.35s cubic-bezier(.22,1,.36,1), opacity 0.3s ease;
+        }
+        .toast-item.toast-in {
+            transform: translateX(0);
+            opacity: 1;
+        }
+        .toast-item.toast-out {
+            transform: translateX(120%);
+            opacity: 0;
+        }
+        .toast-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            font-size: 16px;
+        }
+        .toast-success .toast-icon { background: rgba(0,255,136,0.12); color: #00FF88; border: 1px solid rgba(0,255,136,0.2); }
+        .toast-error   .toast-icon { background: rgba(255,45,120,0.12);  color: #FF2D78; border: 1px solid rgba(255,45,120,0.2); }
+        .toast-info    .toast-icon { background: rgba(0,229,255,0.10);   color: #00E5FF; border: 1px solid rgba(0,229,255,0.2); }
+        .toast-success { border-left: 3px solid #00FF88; }
+        .toast-error   { border-left: 3px solid #FF2D78; }
+        .toast-info    { border-left: 3px solid #00E5FF; }
+        .toast-bar {
+            position: absolute;
+            bottom: 0; left: 0;
+            height: 2px;
+            border-radius: 0 0 12px 12px;
+            animation: toastBar 3.5s linear forwards;
+        }
+        @keyframes toastBar { from { width: 100%; } to { width: 0%; } }
+        .toast-success .toast-bar { background: #00FF88; }
+        .toast-error   .toast-bar { background: #FF2D78; }
+        .toast-info    .toast-bar { background: #00E5FF; }
+    `;
+    document.head.appendChild(style);
+    const container = document.createElement('div');
+    container.id = 'toast-container';
+    document.body.appendChild(container);
+})();
+
 window.showToast = function(type, message) {
-    alert(message); // fallback para la demo rápida
+    const icons = { success: '✓', error: '✕', info: 'i' };
+    const container = document.getElementById('toast-container');
+    if (!container) { console.log('[Toast]', type, message); return; }
+
+    const toast = document.createElement('div');
+    toast.className = `toast-item toast-${type}`;
+    toast.style.position = 'relative';
+    toast.innerHTML = `
+        <div class="toast-icon">${icons[type] || 'i'}</div>
+        <span style="flex:1;line-height:1.4">${message}</span>
+        <button onclick="this.parentElement.remove()" style="background:none;border:none;color:#4A5568;cursor:pointer;padding:4px;line-height:1;font-size:16px;flex-shrink:0" onmouseover="this.style.color='#D1D9E6'" onmouseout="this.style.color='#4A5568'">&times;</button>
+        <div class="toast-bar"></div>
+    `;
+    container.appendChild(toast);
+
+    // Animate in
+    requestAnimationFrame(() => {
+        requestAnimationFrame(() => toast.classList.add('toast-in'));
+    });
+
+    // Auto remove after 3.5s
+    setTimeout(() => {
+        toast.classList.remove('toast-in');
+        toast.classList.add('toast-out');
+        setTimeout(() => toast.remove(), 400);
+    }, 3500);
 };
