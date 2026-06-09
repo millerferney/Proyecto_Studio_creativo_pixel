@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Personalizar Producto - Studio Creativo Pixel</title>
-  <meta name="description" content="Personaliza tu producto con colores, diseños y archivos de referencia. Studio Creativo Pixel — sublimación y diseño premium.">
-
+  <meta name="description"
+    content="Personaliza tu producto con colores, diseños y archivos de referencia. Studio Creativo Pixel — sublimación y diseño premium.">
+  <link rel="icon" type="image/svg+xml" href="Assets/ICON_SP.svg">
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/lucide@latest"></script>
 
@@ -16,8 +18,8 @@
         extend: {
           fontFamily: {
             display: ['Space Grotesk', 'sans-serif'],
-            body:    ['Outfit', 'sans-serif'],
-            mono:    ['JetBrains Mono', 'monospace'],
+            body: ['Outfit', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
           },
           colors: {
             px: { base: '#080B14', surface: '#0F1221', elevated: '#161A2E', overlay: '#1C2038', cyan: '#00E5FF', purple: '#7C3AED', green: '#00FF00', pink: '#FF2D78', text: '#FFFFFF', muted: '#D1D9E6', faint: '#94A3B8' }
@@ -31,7 +33,7 @@
   <style>
     /* ── Background dot grid ── */
     body {
-      background-image: radial-gradient(rgba(0,229,255,0.04) 1px, transparent 1px);
+      background-image: radial-gradient(rgba(0, 229, 255, 0.04) 1px, transparent 1px);
       background-size: 28px 28px;
     }
 
@@ -45,7 +47,11 @@
       transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
       position: relative;
     }
-    .color-swatch:hover { transform: scale(1.15); }
+
+    .color-swatch:hover {
+      transform: scale(1.15);
+    }
+
     .color-swatch.selected {
       border-color: #00E5FF;
       box-shadow: 0 0 0 2px #080B14, 0 0 0 4px #00E5FF;
@@ -53,7 +59,7 @@
 
     /* ── Design card ── */
     .design-card {
-      border: 2px solid rgba(255,255,255,0.06);
+      border: 2px solid rgba(255, 255, 255, 0.06);
       border-radius: 12px;
       padding: 16px;
       cursor: pointer;
@@ -61,8 +67,19 @@
       background: #0F1221;
       text-align: center;
     }
-    .design-card:hover { border-color: #7C3AED; background: rgba(124,58,237,0.08); transform: translateY(-2px); }
-    .design-card.selected { border-color: #00E5FF; background: rgba(0,229,255,0.06); box-shadow: 0 0 20px rgba(0,229,255,0.15); }
+
+    .design-card:hover {
+      border-color: #7C3AED;
+      background: rgba(124, 58, 237, 0.08);
+      transform: translateY(-2px);
+    }
+
+    .design-card.selected {
+      border-color: #00E5FF;
+      background: rgba(0, 229, 255, 0.06);
+      box-shadow: 0 0 20px rgba(0, 229, 255, 0.15);
+    }
+
     .design-card .design-preview {
       width: 100%;
       height: 80px;
@@ -72,30 +89,39 @@
       align-items: center;
       justify-content: center;
       font-size: 28px;
-      background: rgba(255,255,255,0.03);
-      border: 1px solid rgba(255,255,255,0.05);
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.05);
     }
 
     /* ── Upload zone ── */
     .upload-zone {
-      border: 2px dashed rgba(255,255,255,0.15);
+      border: 2px dashed rgba(255, 255, 255, 0.15);
       border-radius: 16px;
       padding: 40px 24px;
       text-align: center;
       cursor: pointer;
       transition: all 0.3s;
-      background: rgba(255,255,255,0.02);
+      background: rgba(255, 255, 255, 0.02);
       position: relative;
       overflow: hidden;
     }
-    .upload-zone:hover, .upload-zone.dragover {
+
+    .upload-zone:hover,
+    .upload-zone.dragover {
       border-color: #00E5FF;
-      background: rgba(0,229,255,0.04);
-      box-shadow: 0 0 30px rgba(0,229,255,0.08) inset;
+      background: rgba(0, 229, 255, 0.04);
+      box-shadow: 0 0 30px rgba(0, 229, 255, 0.08) inset;
     }
+
     .upload-zone input[type="file"] {
-      position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%;
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      cursor: pointer;
+      width: 100%;
+      height: 100%;
     }
+
     .upload-preview {
       display: none;
       align-items: center;
@@ -103,24 +129,32 @@
       padding: 14px 16px;
       background: #161A2E;
       border-radius: 10px;
-      border: 1px solid rgba(0,229,255,0.2);
+      border: 1px solid rgba(0, 229, 255, 0.2);
       margin-top: 16px;
     }
 
     /* ── Quantity controls ── */
     .qty-btn {
-      width: 36px; height: 36px;
+      width: 36px;
+      height: 36px;
       border-radius: 8px;
-      border: 1px solid rgba(255,255,255,0.1);
+      border: 1px solid rgba(255, 255, 255, 0.1);
       background: #161A2E;
       color: #D1D9E6;
       font-size: 18px;
       font-weight: bold;
       cursor: pointer;
-      display: flex; align-items: center; justify-content: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       transition: all 0.15s;
     }
-    .qty-btn:hover { border-color: #00E5FF; color: #00E5FF; background: rgba(0,229,255,0.08); }
+
+    .qty-btn:hover {
+      border-color: #00E5FF;
+      color: #00E5FF;
+      background: rgba(0, 229, 255, 0.08);
+    }
 
     /* ── Section step badge ── */
     .step-label {
@@ -129,8 +163,8 @@
       letter-spacing: 0.15em;
       text-transform: uppercase;
       color: #00E5FF;
-      background: rgba(0,229,255,0.08);
-      border: 1px solid rgba(0,229,255,0.2);
+      background: rgba(0, 229, 255, 0.08);
+      border: 1px solid rgba(0, 229, 255, 0.2);
       padding: 3px 10px;
       border-radius: 4px;
       display: inline-block;
@@ -141,7 +175,7 @@
     .notes-area {
       width: 100%;
       background: #161A2E;
-      border: 1px solid rgba(255,255,255,0.06);
+      border: 1px solid rgba(255, 255, 255, 0.06);
       border-radius: 10px;
       color: #D1D9E6;
       font-family: 'Outfit', sans-serif;
@@ -152,23 +186,32 @@
       outline: none;
       transition: border-color 0.2s;
     }
-    .notes-area:focus { border-color: #00E5FF; }
-    .notes-area::placeholder { color: #4A5568; }
+
+    .notes-area:focus {
+      border-color: #00E5FF;
+    }
+
+    .notes-area::placeholder {
+      color: #4A5568;
+    }
 
     /* ── Sticky summary panel ── */
     .summary-panel {
       position: sticky;
       top: 90px;
       background: #0F1221;
-      border: 1px solid rgba(255,255,255,0.06);
+      border: 1px solid rgba(255, 255, 255, 0.06);
       border-radius: 20px;
       padding: 28px;
-      box-shadow: 0 24px 64px rgba(0,0,0,0.5);
+      box-shadow: 0 24px 64px rgba(0, 0, 0, 0.5);
     }
+
     .summary-panel::before {
       content: '';
       position: absolute;
-      top: 0; left: 0; right: 0;
+      top: 0;
+      left: 0;
+      right: 0;
       height: 3px;
       background: linear-gradient(90deg, #00E5FF, #7C3AED, #00FF00);
       border-radius: 20px 20px 0 0;
@@ -178,7 +221,7 @@
     .size-pill {
       padding: 8px 18px;
       border-radius: 8px;
-      border: 1px solid rgba(255,255,255,0.08);
+      border: 1px solid rgba(255, 255, 255, 0.08);
       background: #161A2E;
       color: #94A3B8;
       font-family: 'JetBrains Mono', monospace;
@@ -187,31 +230,61 @@
       cursor: pointer;
       transition: all 0.2s;
     }
-    .size-pill:hover { border-color: #7C3AED; color: #D1D9E6; }
-    .size-pill.selected { border-color: #7C3AED; background: rgba(124,58,237,0.15); color: #fff; box-shadow: 0 0 12px rgba(124,58,237,0.25); }
+
+    .size-pill:hover {
+      border-color: #7C3AED;
+      color: #D1D9E6;
+    }
+
+    .size-pill.selected {
+      border-color: #7C3AED;
+      background: rgba(124, 58, 237, 0.15);
+      color: #fff;
+      box-shadow: 0 0 12px rgba(124, 58, 237, 0.25);
+    }
 
     /* ── Material pill ── */
     .material-pill {
       padding: 10px 16px;
       border-radius: 10px;
-      border: 1px solid rgba(255,255,255,0.06);
+      border: 1px solid rgba(255, 255, 255, 0.06);
       background: #161A2E;
       color: #94A3B8;
       font-family: 'Outfit', sans-serif;
       font-size: 13px;
       cursor: pointer;
       transition: all 0.2s;
-      display: flex; align-items: center; gap: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
     }
-    .material-pill:hover { border-color: #00E5FF; color: #D1D9E6; }
-    .material-pill.selected { border-color: #00E5FF; background: rgba(0,229,255,0.08); color: #fff; }
+
+    .material-pill:hover {
+      border-color: #00E5FF;
+      color: #D1D9E6;
+    }
+
+    .material-pill.selected {
+      border-color: #00E5FF;
+      background: rgba(0, 229, 255, 0.08);
+      color: #fff;
+    }
 
     /* ── Floating neon line animation ── */
     @keyframes gradientShift {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
+      0% {
+        background-position: 0% 50%;
+      }
+
+      50% {
+        background-position: 100% 50%;
+      }
+
+      100% {
+        background-position: 0% 50%;
+      }
     }
+
     .neon-cta {
       background: linear-gradient(135deg, #00FF00, #00E5FF, #7C3AED, #00FF00);
       background-size: 300% 300%;
@@ -219,38 +292,41 @@
       color: #000;
       font-weight: 900;
     }
+
     .neon-cta:hover {
       transform: translateY(-2px);
-      box-shadow: 0 0 40px rgba(0,255,0,0.4);
+      box-shadow: 0 0 40px rgba(0, 255, 0, 0.4);
     }
 
     /* ── Cart btn ── */
     .btn-cart {
-      background: rgba(0,229,255,0.08);
-      border: 2px solid rgba(0,229,255,0.4);
+      background: rgba(0, 229, 255, 0.08);
+      border: 2px solid rgba(0, 229, 255, 0.4);
       color: #00E5FF;
       transition: all 0.25s;
     }
+
     .btn-cart:hover {
-      background: rgba(0,229,255,0.15);
+      background: rgba(0, 229, 255, 0.15);
       border-color: #00E5FF;
-      box-shadow: 0 0 20px rgba(0,229,255,0.25);
+      box-shadow: 0 0 20px rgba(0, 229, 255, 0.25);
       transform: translateY(-1px);
     }
 
     /* ── Product image hero ── */
     .product-img-wrap {
       background: #0F1221;
-      border: 1px solid rgba(255,255,255,0.06);
+      border: 1px solid rgba(255, 255, 255, 0.06);
       border-radius: 20px;
       overflow: hidden;
       position: relative;
     }
+
     .product-img-wrap::after {
       content: '';
       position: absolute;
       inset: 0;
-      background: linear-gradient(135deg, rgba(0,229,255,0.05) 0%, transparent 60%);
+      background: linear-gradient(135deg, rgba(0, 229, 255, 0.05) 0%, transparent 60%);
       pointer-events: none;
     }
 
@@ -265,8 +341,15 @@
       padding: 0;
       background: none;
     }
-    input[type="color"]::-webkit-color-swatch-wrapper { padding: 0; }
-    input[type="color"]::-webkit-color-swatch { border: 3px solid rgba(255,255,255,0.15); border-radius: 50%; }
+
+    input[type="color"]::-webkit-color-swatch-wrapper {
+      padding: 0;
+    }
+
+    input[type="color"]::-webkit-color-swatch {
+      border: 3px solid rgba(255, 255, 255, 0.15);
+      border-radius: 50%;
+    }
 
     /* Scroll animations */
     .fade-up {
@@ -274,29 +357,42 @@
       transform: translateY(24px);
       transition: opacity 0.5s ease, transform 0.5s ease;
     }
-    .fade-up.visible { opacity: 1; transform: none; }
+
+    .fade-up.visible {
+      opacity: 1;
+      transform: none;
+    }
   </style>
 </head>
+
 <body class="dark bg-px-base text-px-text min-h-screen pb-20">
 
   <!-- ══ NAVBAR ══ -->
-  <nav id="navbar" class="fixed top-0 left-0 right-0 z-[1000] h-[60px] flex items-center justify-between px-6 bg-glass border-b border-white border-opacity-5">
+  <nav id="navbar"
+    class="fixed top-0 left-0 right-0 z-[1000] h-[60px] flex items-center justify-between px-6 bg-glass border-b border-white border-opacity-5">
     <a href="index.html" class="flex items-center gap-3 no-underline">
       <span class="font-display font-bold text-base md:text-lg text-white tracking-wide">
         Studio <span class="text-px-cyan">Creativo</span> Pixel
       </span>
     </a>
     <div class="hidden md:flex items-center gap-2 nav-links">
-      <a href="index.html" class="nav-link font-body text-sm font-medium text-px-muted px-4 py-2 rounded-md hover:text-white transition">Inicio</a>
-      <a href="servicios.html" class="nav-link font-body text-sm font-medium text-px-muted px-4 py-2 rounded-md hover:text-white transition">Servicios</a>
-      <a href="catalogo.html" class="nav-link font-body text-sm font-medium text-px-muted px-4 py-2 rounded-md hover:text-white transition">Catálogo</a>
+      <a href="index.html"
+        class="nav-link font-body text-sm font-medium text-px-muted px-4 py-2 rounded-md hover:text-white transition">Inicio</a>
+      <a href="servicios.html"
+        class="nav-link font-body text-sm font-medium text-px-muted px-4 py-2 rounded-md hover:text-white transition">Servicios</a>
+      <a href="catalogo.html"
+        class="nav-link font-body text-sm font-medium text-px-muted px-4 py-2 rounded-md hover:text-white transition">Catálogo</a>
     </div>
     <div class="flex items-center gap-2">
-      <button id="cart-btn" onclick="openCart()" class="relative flex items-center justify-center w-10 h-10 hover:bg-white hover:bg-opacity-10 rounded-lg text-px-muted hover:text-white transition">
+      <button id="cart-btn" onclick="openCart()"
+        class="relative flex items-center justify-center w-10 h-10 hover:bg-white hover:bg-opacity-10 rounded-lg text-px-muted hover:text-white transition">
         <i data-lucide="shopping-cart" class="w-5 h-5"></i>
-        <span id="cart-badge" class="absolute -top-1 -right-1 w-4 h-4 bg-px-cyan text-px-base text-[10px] font-mono font-bold rounded-full flex items-center justify-center" style="display:none">0</span>
+        <span id="cart-badge"
+          class="absolute -top-1 -right-1 w-4 h-4 bg-px-cyan text-px-base text-[10px] font-mono font-bold rounded-full flex items-center justify-center"
+          style="display:none">0</span>
       </button>
-      <button id="user-btn" onclick="openAuth ? openAuth('login') : openModal('auth-overlay')" class="flex items-center justify-center w-10 h-10 rounded-full border border-white border-opacity-[0.06] bg-px-elevated text-px-muted hover:text-px-text transition">
+      <button id="user-btn" onclick="openAuth ? openAuth('login') : openModal('auth-overlay')"
+        class="flex items-center justify-center w-10 h-10 rounded-full border border-white border-opacity-[0.06] bg-px-elevated text-px-muted hover:text-px-text transition">
         <i data-lucide="user" class="w-[18px] h-[18px]"></i>
       </button>
     </div>
@@ -323,13 +419,15 @@
           <img id="product-hero-img" src="" alt="Producto" class="w-full h-full object-cover">
         </div>
         <!-- Customization live chip -->
-        <div class="flex items-center gap-2 mt-4 p-3 bg-px-surface border border-px-purple border-opacity-30 rounded-xl">
+        <div
+          class="flex items-center gap-2 mt-4 p-3 bg-px-surface border border-px-purple border-opacity-30 rounded-xl">
           <div class="w-8 h-8 rounded-lg bg-px-elevated flex items-center justify-center flex-shrink-0">
             <i data-lucide="sparkles" class="w-4 h-4 text-px-purple"></i>
           </div>
           <div>
             <p class="font-display font-bold text-xs text-white m-0">Vista previa de diseño</p>
-            <p class="font-mono text-[10px] text-px-faint m-0 uppercase tracking-wide">Las opciones se aplicarán al producto</p>
+            <p class="font-mono text-[10px] text-px-faint m-0 uppercase tracking-wide">Las opciones se aplicarán al
+              producto</p>
           </div>
         </div>
       </div>
@@ -337,19 +435,23 @@
       <!-- Product Info + Summary -->
       <div class="flex-1 min-w-0">
         <div class="fade-up" style="transition-delay:0.1s">
-          <span class="text-px-cyan font-mono text-[10px] font-bold uppercase tracking-widest block mb-2">PERSONALIZACIÓN PREMIUM</span>
+          <span
+            class="text-px-cyan font-mono text-[10px] font-bold uppercase tracking-widest block mb-2">PERSONALIZACIÓN
+            PREMIUM</span>
           <h1 id="product-title" class="font-display font-bold text-4xl leading-tight text-white mb-2">Cargando...</h1>
           <p id="product-price" class="font-mono font-bold text-2xl text-px-green mb-6">$0</p>
         </div>
 
         <!-- ── STICKY SUMMARY (mobile: inline / desktop: right col) ── -->
         <div class="summary-panel relative fade-up" style="transition-delay:0.15s">
-          <span class="font-mono text-[9px] text-px-purple uppercase tracking-[0.2em] block mb-3">RESUMEN DE PERSONALIZACIÓN</span>
+          <span class="font-mono text-[9px] text-px-purple uppercase tracking-[0.2em] block mb-3">RESUMEN DE
+            PERSONALIZACIÓN</span>
           <div class="flex flex-col gap-3 mb-6">
             <div class="flex justify-between text-sm">
               <span class="text-px-faint font-body">Color seleccionado</span>
               <div class="flex items-center gap-2">
-                <div id="summary-color-swatch" class="w-4 h-4 rounded-full border border-white border-opacity-20" style="background:#fff"></div>
+                <div id="summary-color-swatch" class="w-4 h-4 rounded-full border border-white border-opacity-20"
+                  style="background:#fff"></div>
                 <span id="summary-color" class="font-mono text-white text-xs">#FFFFFF</span>
               </div>
             </div>
@@ -398,7 +500,8 @@
           </div>
 
           <!-- Secure note -->
-          <p class="text-center font-mono text-[9px] text-px-faint mt-4 uppercase tracking-widest flex items-center justify-center gap-1">
+          <p
+            class="text-center font-mono text-[9px] text-px-faint mt-4 uppercase tracking-widest flex items-center justify-center gap-1">
             <i data-lucide="shield-check" class="w-3 h-3 text-px-green"></i>
             Compra 100% segura · Producción en 3-5 días hábiles
           </p>
@@ -415,7 +518,8 @@
       <div class="fade-up">
         <span class="step-label">PASO 01</span>
         <h2 class="font-display font-bold text-2xl text-white mb-1">Elige tu Color</h2>
-        <p class="font-body text-sm text-px-faint mb-6">Selecciona uno de los colores predefinidos o usa el selector para un tono personalizado.</p>
+        <p class="font-body text-sm text-px-faint mb-6">Selecciona uno de los colores predefinidos o usa el selector
+          para un tono personalizado.</p>
 
         <!-- Preset swatches -->
         <div class="flex flex-wrap gap-3 mb-6" id="color-swatches">
@@ -426,8 +530,7 @@
         <div class="flex items-center gap-4 p-4 bg-px-surface border border-white border-opacity-5 rounded-xl">
           <div class="relative">
             <input type="color" id="custom-color-picker" value="#00E5FF" title="Color personalizado"
-              oninput="selectCustomColor(this.value)"
-              class="rounded-full cursor-pointer">
+              oninput="selectCustomColor(this.value)" class="rounded-full cursor-pointer">
           </div>
           <div>
             <p class="font-display font-bold text-sm text-white m-0">Color personalizado</p>
@@ -440,7 +543,8 @@
       <div class="fade-up" style="transition-delay:0.1s">
         <span class="step-label">PASO 02</span>
         <h2 class="font-display font-bold text-2xl text-white mb-1">Diseño Base</h2>
-        <p class="font-body text-sm text-px-faint mb-6">Elige una plantilla de diseño como punto de partida para tu personalización.</p>
+        <p class="font-body text-sm text-px-faint mb-6">Elige una plantilla de diseño como punto de partida para tu
+          personalización.</p>
 
         <div class="grid grid-cols-2 sm:grid-cols-3 gap-3" id="design-cards">
           <!-- Injected by JS -->
@@ -477,18 +581,21 @@
       <div class="fade-up">
         <span class="step-label">PASO 05</span>
         <h2 class="font-display font-bold text-2xl text-white mb-1">Archivo de Referencia</h2>
-        <p class="font-body text-sm text-px-faint mb-6">Sube tu logo, imagen o cualquier archivo que quieras usar como base del diseño (PNG, JPG, SVG, PDF, AI, PSD).</p>
+        <p class="font-body text-sm text-px-faint mb-6">Sube tu logo, imagen o cualquier archivo que quieras usar como
+          base del diseño (PNG, JPG, SVG, PDF, AI, PSD).</p>
 
         <div class="upload-zone" id="upload-zone">
           <input type="file" id="file-upload" accept=".png,.jpg,.jpeg,.svg,.pdf,.ai,.psd,.webp"
             onchange="handleFileUpload(this)">
           <div id="upload-placeholder">
-            <div class="w-16 h-16 rounded-2xl bg-px-elevated border border-white border-opacity-5 flex items-center justify-center mx-auto mb-4">
+            <div
+              class="w-16 h-16 rounded-2xl bg-px-elevated border border-white border-opacity-5 flex items-center justify-center mx-auto mb-4">
               <i data-lucide="upload-cloud" class="w-8 h-8 text-px-cyan opacity-60"></i>
             </div>
             <p class="font-display font-bold text-base text-white m-0 mb-1">Arrastra tu archivo aquí</p>
             <p class="font-body text-sm text-px-faint m-0 mb-3">o haz clic para explorar</p>
-            <span class="font-mono text-[10px] text-px-faint uppercase tracking-widest">PNG · JPG · SVG · PDF · AI · PSD · Máx 20MB</span>
+            <span class="font-mono text-[10px] text-px-faint uppercase tracking-widest">PNG · JPG · SVG · PDF · AI · PSD
+              · Máx 20MB</span>
           </div>
         </div>
 
@@ -501,7 +608,8 @@
             <p id="upload-filename" class="font-display font-bold text-sm text-white m-0 truncate">archivo.png</p>
             <p id="upload-filesize" class="font-mono text-[10px] text-px-faint m-0 uppercase">0 KB</p>
           </div>
-          <button onclick="clearUpload()" class="w-8 h-8 rounded-lg bg-px-base flex items-center justify-center text-px-faint hover:text-px-pink transition flex-shrink-0">
+          <button onclick="clearUpload()"
+            class="w-8 h-8 rounded-lg bg-px-base flex items-center justify-center text-px-faint hover:text-px-pink transition flex-shrink-0">
             <i data-lucide="x" class="w-4 h-4"></i>
           </button>
         </div>
@@ -511,13 +619,15 @@
       <div class="fade-up" style="transition-delay:0.1s">
         <span class="step-label">PASO 06</span>
         <h2 class="font-display font-bold text-2xl text-white mb-1">Instrucciones y Cantidad</h2>
-        <p class="font-body text-sm text-px-faint mb-5">Describe tu idea, solicita modificaciones o deja indicaciones especiales al equipo de diseño.</p>
+        <p class="font-body text-sm text-px-faint mb-5">Describe tu idea, solicita modificaciones o deja indicaciones
+          especiales al equipo de diseño.</p>
 
         <textarea id="design-notes" class="notes-area mb-6"
           placeholder="Ej: Quiero el logo en la parte superior izquierda con fondo transparente, letras en neon verde...&#10;&#10;Cuéntanos todo lo que necesitas 🎨"></textarea>
 
         <!-- Quantity -->
-        <div class="p-4 bg-px-surface border border-white border-opacity-5 rounded-xl flex items-center justify-between">
+        <div
+          class="p-4 bg-px-surface border border-white border-opacity-5 rounded-xl flex items-center justify-between">
           <div>
             <p class="font-display font-bold text-sm text-white m-0">Cantidad</p>
             <p class="font-mono text-[10px] text-px-faint m-0 uppercase mt-0.5">Unidades del producto</p>
@@ -552,26 +662,34 @@
     <div class="max-w-[1200px] mx-auto grid grid-cols-1 md:grid-cols-4 gap-10 mb-10">
       <div class="flex flex-col items-start gap-5">
         <a href="index.html" class="no-underline">
-          <img src="Assets/Chartlogo.svg" alt="Logo Studio Pixel" class="h-24 w-24 rounded-3xl shadow-[0_0_30px_rgba(0,229,255,0.15)]">
+          <img src="Assets/Chartlogo.svg" alt="Logo Studio Pixel"
+            class="h-24 w-24 rounded-3xl shadow-[0_0_30px_rgba(0,229,255,0.15)]">
         </a>
         <p class="font-body text-xs text-px-faint max-w-[250px] leading-relaxed">
-          Plataforma de sublimación, diseño y producción premium. Llevamos tu identidad visual a soportes físicos con precisión extrema.
+          Plataforma de sublimación, diseño y producción premium. Llevamos tu identidad visual a soportes físicos con
+          precisión extrema.
         </p>
       </div>
       <div>
         <h4 class="font-display font-bold text-sm text-white mb-5">Explorar</h4>
         <ul class="flex flex-col gap-3">
-          <li><a href="index.html" class="font-body text-sm text-px-faint hover:text-px-green transition-colors">Inicio</a></li>
-          <li><a href="servicios.html" class="font-body text-sm text-px-faint hover:text-px-green transition-colors">Servicios</a></li>
-          <li><a href="catalogo.html" class="font-body text-sm text-px-faint hover:text-px-green transition-colors">Catálogo</a></li>
+          <li><a href="index.html"
+              class="font-body text-sm text-px-faint hover:text-px-green transition-colors">Inicio</a></li>
+          <li><a href="servicios.html"
+              class="font-body text-sm text-px-faint hover:text-px-green transition-colors">Servicios</a></li>
+          <li><a href="catalogo.html"
+              class="font-body text-sm text-px-faint hover:text-px-green transition-colors">Catálogo</a></li>
         </ul>
       </div>
       <div>
         <h4 class="font-display font-bold text-sm text-white mb-5">Legal</h4>
         <ul class="flex flex-col gap-3">
-          <li><a href="#" class="font-body text-sm text-px-faint hover:text-px-green transition-colors">Términos y condiciones</a></li>
-          <li><a href="#" class="font-body text-sm text-px-faint hover:text-px-green transition-colors">Política de privacidad</a></li>
-          <li><a href="#" class="font-body text-sm text-px-faint hover:text-px-green transition-colors">Política de envíos</a></li>
+          <li><a href="#" class="font-body text-sm text-px-faint hover:text-px-green transition-colors">Términos y
+              condiciones</a></li>
+          <li><a href="#" class="font-body text-sm text-px-faint hover:text-px-green transition-colors">Política de
+              privacidad</a></li>
+          <li><a href="#" class="font-body text-sm text-px-faint hover:text-px-green transition-colors">Política de
+              envíos</a></li>
         </ul>
       </div>
       <div>
@@ -589,23 +707,26 @@
         </div>
       </div>
     </div>
-    <div class="max-w-[1200px] mx-auto border-t border-white border-opacity-[0.05] pt-6 flex flex-col md:flex-row items-center justify-between gap-4">
-      <p class="font-mono text-[11px] text-px-faint m-0">© 2026 Studio Creativo Pixel. Todos los derechos reservados.</p>
+    <div
+      class="max-w-[1200px] mx-auto border-t border-white border-opacity-[0.05] pt-6 flex flex-col md:flex-row items-center justify-between gap-4">
+      <p class="font-mono text-[11px] text-px-faint m-0">© 2026 Studio Creativo Pixel. Todos los derechos reservados.
+      </p>
     </div>
   </footer>
 
   <!-- ══ CART DRAWER ══ -->
   <div id="cart-overlay" onclick="closeCart()"></div>
   <div id="cart-drawer" role="dialog" aria-label="Carrito de compras">
-    <div style="display:flex;align-items:center;justify-content:space-between;padding:20px;border-bottom:1px solid rgba(255,255,255,0.06);flex-shrink:0">
+    <div
+      style="display:flex;align-items:center;justify-content:space-between;padding:20px;border-bottom:1px solid rgba(255,255,255,0.06);flex-shrink:0">
       <div>
         <h2 class="font-display text-xl font-bold m-0"><span style="color:#00FF88">Tu</span> Carrito.</h2>
         <p id="cart-count-label" class="font-body text-[13px] m-0 mt-1" style="color:#D1D9E6">0 ítems</p>
       </div>
       <button onclick="closeCart()" aria-label="Cerrar carrito"
-              style="width:36px;height:36px;border-radius:8px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.1);color:#D1D9E6;display:flex;align-items:center;justify-content:center;cursor:pointer"
-              onmouseover="this.style.color='#FFFFFF';this.style.background='rgba(255,255,255,0.12)'"
-              onmouseout="this.style.color='#D1D9E6';this.style.background='rgba(255,255,255,0.08)'">
+        style="width:36px;height:36px;border-radius:8px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.1);color:#D1D9E6;display:flex;align-items:center;justify-content:center;cursor:pointer"
+        onmouseover="this.style.color='#FFFFFF';this.style.background='rgba(255,255,255,0.12)'"
+        onmouseout="this.style.color='#D1D9E6';this.style.background='rgba(255,255,255,0.08)'">
         <i data-lucide="x" style="width:18px;height:18px"></i>
       </button>
     </div>
@@ -613,7 +734,8 @@
     <div id="cart-items-container" style="flex:1;overflow-y:auto"></div>
 
     <div id="cart-empty-state" style="text-align:center;padding:56px 24px">
-      <div style="width:60px;height:60px;border-radius:16px;background:#161A2E;border:1px solid rgba(255,255,255,0.06);display:flex;align-items:center;justify-content:center;margin:0 auto 16px;color:#4A5568">
+      <div
+        style="width:60px;height:60px;border-radius:16px;background:#161A2E;border:1px solid rgba(255,255,255,0.06);display:flex;align-items:center;justify-content:center;margin:0 auto 16px;color:#4A5568">
         <i data-lucide="shopping-cart" style="width:28px;height:28px"></i>
       </div>
       <p class="font-display font-bold m-0 mb-1" style="color:#D1D9E6">Tu carrito está vacío</p>
@@ -624,24 +746,30 @@
     <div id="cart-footer" style="display:none;border-top:1px solid rgba(255,255,255,0.06);padding:20px;flex-shrink:0">
       <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:16px">
         <div style="display:flex;justify-content:space-between;font-size:13px;color:#8B97B3">
-          <span>Subtotal</span><span id="cart-subtotal" style="font-family:'JetBrains Mono',monospace;color:#E8EDF5">$0</span>
+          <span>Subtotal</span><span id="cart-subtotal"
+            style="font-family:'JetBrains Mono',monospace;color:#E8EDF5">$0</span>
         </div>
         <div style="display:flex;justify-content:space-between;font-size:13px;color:#8B97B3">
-          <span>Descuento</span><span id="cart-discount" style="font-family:'JetBrains Mono',monospace;color:#00FF88">-$0</span>
+          <span>Descuento</span><span id="cart-discount"
+            style="font-family:'JetBrains Mono',monospace;color:#00FF88">-$0</span>
         </div>
-        <div style="display:flex;justify-content:space-between;font-size:13px;color:#8B97B3;border-bottom:1px solid rgba(255,255,255,0.06);padding-bottom:12px">
+        <div
+          style="display:flex;justify-content:space-between;font-size:13px;color:#8B97B3;border-bottom:1px solid rgba(255,255,255,0.06);padding-bottom:12px">
           <span>IVA 19%</span><span id="cart-iva" style="font-family:'JetBrains Mono',monospace;color:#E8EDF5">$0</span>
         </div>
-        <div style="display:flex;justify-content:space-between;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:16px;padding-top:4px">
+        <div
+          style="display:flex;justify-content:space-between;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:16px;padding-top:4px">
           <span style="color:white;text-transform:uppercase">Total</span>
           <span id="cart-total" style="font-family:'JetBrains Mono',monospace;color:#00E5FF">$0</span>
         </div>
       </div>
-      <button onclick="window.location.href='checkout.html'" class="btn-success w-full flex items-center justify-center gap-2 py-3 text-sm font-bold mb-2">
+      <button onclick="window.location.href='checkout.html'"
+        class="btn-success w-full flex items-center justify-center gap-2 py-3 text-sm font-bold mb-2">
         Confirmar Pedido <i data-lucide="arrow-right" style="width:16px;height:16px"></i>
       </button>
-      <button onclick="closeCart()" style="width:100%;background:none;border:none;font-family:'Outfit',sans-serif;font-size:13px;color:#94A3B8;cursor:pointer;padding:8px;transition:color 0.15s"
-              onmouseover="this.style.color='#FFFFFF'" onmouseout="this.style.color='#94A3B8'">
+      <button onclick="closeCart()"
+        style="width:100%;background:none;border:none;font-family:'Outfit',sans-serif;font-size:13px;color:#94A3B8;cursor:pointer;padding:8px;transition:color 0.15s"
+        onmouseover="this.style.color='#FFFFFF'" onmouseout="this.style.color='#94A3B8'">
         Seguir comprando
       </button>
     </div>
@@ -650,4 +778,5 @@
   <script src="app.js"></script>
 
 </body>
+
 </html>
