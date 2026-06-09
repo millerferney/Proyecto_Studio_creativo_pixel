@@ -4,7 +4,8 @@
 :root {
   --primary: #00E5FF;
   --secondary: #7C3AED;
-  --success: #00FF00; /* Reverted to classic neon green */
+  --success: #00FF00;
+  /* Reverted to classic neon green */
   --error: #FF4D6A;
   --base: #080B14;
   --surface: #0F1221;
