@@ -331,65 +331,6 @@
   </footer>
 
   <script src="app.js"></script>
-  <script>
-    lucide.createIcons();
-
-    function selectPayment(id) {
-      document.querySelectorAll('.payment-card').forEach(el => {
-        el.classList.remove('active');
-        const tit = el.querySelector('h3');
-        if (tit) tit.classList.remove('text-px-cyan');
-        if (tit) tit.classList.add('text-white');
-        const iCon = el.querySelector('i[data-lucide]:not(.text-black)');
-        if (iCon) { iCon.classList.remove('text-px-cyan'); iCon.classList.add('text-white'); }
-      });
-
-      const target = document.getElementById('pay-' + id);
-      target.classList.add('active');
-      const targetTitle = target.querySelector('h3');
-      const targetIcon = target.querySelector('i[data-lucide]:not(.text-black)');
-      if (targetTitle) { targetTitle.classList.remove('text-white'); targetTitle.classList.add('text-px-green'); }
-      if (targetIcon) { targetIcon.classList.remove('text-white'); targetIcon.classList.add('text-px-green'); }
-    }
-
-    // Load existing items from cart
-    document.addEventListener('DOMContentLoaded', () => {
-      const wrapper = document.getElementById('checkout-items-list');
-      if (!cart || cart.length === 0) {
-        wrapper.innerHTML = '<p class="font-mono text-[11px] text-px-muted uppercase tracking-widest text-center py-4">TU CARRITO ESTÁ VACÍO.</p>';
-        return;
-      }
-
-      wrapper.innerHTML = cart.map(i => `
-          <div>
-            <div class="flex justify-between items-start mb-1">
-               <h3 class="font-display font-bold text-[13px] uppercase tracking-wide text-white m-0 max-w-[200px] truncate" title="${i.name}">${i.name} <span class="text-px-faint ml-1">x${i.qty}</span></h3>
-               <span class="font-mono text-[13px] font-bold text-px-cyan">${formatCOP(i.price * i.qty)}</span>
-            </div>
-            <p class="font-mono text-[10px] text-px-muted uppercase tracking-widest m-0">SKU-${i.id.toString().padStart(6, '0')} PIXEL ASSET</p>
-          </div>
-       `).join('');
-
-      let totalCost = cart.reduce((no, it) => no + (it.price * it.qty), 0);
-      let discount = Math.round(totalCost * 0.05);
-      let iva = Math.round((totalCost - discount) * 0.19);
-      document.getElementById('chk-sub').textContent = formatCOP(totalCost);
-      document.getElementById('chk-disc').textContent = '-' + formatCOP(discount);
-      document.getElementById('chk-iva').textContent = formatCOP(iva);
-      document.getElementById('chk-total').textContent = formatCOP(totalCost - discount + iva);
-    });
-
-    function processPayment() {
-      if (cart.length === 0) {
-        alert('Agrega items al carrito primero');
-        return;
-      }
-      alert('Pago simulado con éxito.');
-      cart = [];
-      localStorage.removeItem('scp_cart_v1');
-      window.location.href = 'index.html';
-    }
-  </script>
 </body>
 
 </html>

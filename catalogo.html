@@ -73,12 +73,12 @@
           <span class="text-px-cyan font-mono text-xs font-bold uppercase tracking-widest block mb-2">PRODUCTOS</span>
           <h1 class="text-4xl font-display font-bold">NUESTRO CATÁLOGO.</h1>
         </div>
-        <div class="hidden md:flex gap-4">
-          <select class="field-input w-[180px] bg-px-surface">
-            <option>Todas las categorías</option>
-            <option>Tazas y Mugs</option>
-            <option>Ropa y Textiles</option>
-            <option>Accesorios</option>
+        <div class="flex gap-2 md:gap-4 flex-wrap md:flex-nowrap mt-4 md:mt-0">
+          <select id="category-select" class="field-input w-[180px] bg-px-surface">
+            <option value="all">Todas las categorías</option>
+            <option value="Tazas">Tazas y Mugs</option>
+            <option value="Ropa">Ropa y Textiles</option>
+            <option value="Accesorios">Accesorios</option>
           </select>
           <select id="sort-select" class="field-input w-[180px] bg-px-surface">
             <option value="none">Ordenar por</option>
@@ -90,53 +90,7 @@
       
       <!-- Grid de productos -->
       <div id="products-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 mb-16">
-        <!-- Mock Products -->
-        <script>
-            const prods = [
-              {id: 1, name: 'Taza Esmerilada', badge: 'OFERTA', price: 25000, img: 'Taza Esmerilada.jpg'},
-              {id: 2, name: 'Gorra Snapback', badge: '', price: 35000, img: 'Gorra Snapback.png'},
-              {id: 3, name: 'Taza Pixel-Glow', badge: '', price: 38000, img: 'Taza Pixel-Glow.jpg'},
-              {id: 4, name: 'Hoodie Tech-Spec', badge: 'NUEVO', price: 95000, img: 'Hoodie Tech-Spec.webp'},
-              {id: 5, name: 'Carcasa iPhone 14', badge: '', price: 42000, img: 'Carcasa iPhone 14.jpg'},
-              {id: 6, name: 'Vaso Stanley Custom', badge: 'PRO', price: 120000, img: 'Vaso Stanley Custom.jpg'},
-              {id: 7, name: 'Llavero Acrílico', badge: '', price: 8000, img: 'Llavero Acrílico.jpg'},
-              {id: 8, name: 'Botella Aluminio', badge: '', price: 28000, img: 'Botella Aluminio.jpg'}
-            ];
-           
-           function renderProducts() {
-             const sortVal = document.getElementById('sort-select').value;
-             let sorted = [...prods];
-             if (sortVal === 'desc') {
-               sorted.sort((a,b) => b.price - a.price);
-             } else if (sortVal === 'asc') {
-               sorted.sort((a,b) => a.price - b.price);
-             }
-             
-             const container = document.getElementById('products-grid');
-             container.innerHTML = sorted.map(p => `
-             <div class="card bg-px-surface group flex flex-col items-start border border-white border-opacity-[0.06] hover:border-px-purple hover:border-opacity-30 p-4 rounded-[12px] relative overflow-hidden">
-                ${p.badge ? `<div class="absolute top-4 right-4 bg-px-purple text-white px-2 py-0.5 text-[9px] font-mono font-bold z-10 rounded">${p.badge}</div>` : ''}
-                 <div class="w-full bg-px-base border border-white border-opacity-[0.06] rounded-lg mb-4 h-[160px] flex items-center justify-center overflow-hidden">
-                    <img src="Assets/${p.img}" alt="${p.name}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
-                 </div>
-                <h3 class="font-display font-bold text-base text-white group-hover:text-px-purple transition w-full truncate">${p.name}</h3>
-                <span class="font-mono font-bold text-[13px] text-px-green mb-4">` + new Intl.NumberFormat('es-CO', {style: 'currency', currency:'COP', minimumFractionDigits:0}).format(p.price) + `</span>
-                <a href="personalizar.html?pid=${p.id}" class="w-full py-2 mb-2 flex items-center justify-center gap-1.5 bg-transparent border border-px-cyan border-opacity-40 text-px-cyan font-display font-bold text-xs hover:bg-px-cyan hover:text-px-base hover:border-opacity-100 transition tracking-wide text-center rounded-lg" style="text-decoration:none">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
-                  PERSONALIZAR
-                </a>
-                <button class="w-full py-2 bg-px-elevated border border-white border-opacity-[0.06] text-px-muted font-display font-bold text-xs hover:bg-px-purple hover:text-white hover:border-px-purple transition tracking-wide text-center rounded-lg" onclick="addToCart(${p.id}, '${p.name}', ${p.price})">AÑADIR</button>
-             </div>
-             `).join('');
-             if (window.lucide) { lucide.createIcons(); }
-           }
-           
-           // Ensure it runs after DOM is ready or inline
-           window.addEventListener('DOMContentLoaded', () => {
-             renderProducts();
-             document.getElementById('sort-select').addEventListener('change', renderProducts);
-           });
-        </script>
+         <!-- Productos cargados desde app.js -->
       </div>
     </section>
 
@@ -478,45 +432,5 @@
   </div><!-- /cart-drawer -->
 
   <script src="app.js"></script>
-  <script>
-    // Logic specific to catalogo -> checkout view toggle
-    function toggleCheckout(show) {
-      if(show) {
-         document.getElementById('sec-catalogo').hidden = true;
-         document.getElementById('sec-checkout').hidden = false;
-         renderCheckout();
-         window.scrollTo(0,0);
-      } else {
-         document.getElementById('sec-catalogo').hidden = false;
-         document.getElementById('sec-checkout').hidden = true;
-      }
-    }
-    
-    function renderCheckout() {
-       const wrapper = document.getElementById('checkout-items');
-       wrapper.innerHTML = cart.map(i => `
-          <div class="flex justify-between items-center py-2 border-b border-white border-opacity-5 last:border-0 text-sm">
-             <div class="flex items-center gap-2">
-                <span class="text-px-muted font-mono bg-px-elevated px-1.5 py-0.5 rounded text-[10px]">${i.qty}x</span>
-                <span class="text-white font-body truncate w-[140px]" title="${i.name}">${i.name}</span>
-             </div>
-             <span class="text-px-cyan font-mono">${formatCOP(i.price * i.qty)}</span>
-          </div>
-       `).join('');
-       
-       let totalCost = cart.reduce((no, it) => no + (it.price * it.qty), 0);
-       let discount = Math.round(totalCost * 0.05);
-       let iva = Math.round((totalCost - discount) * 0.19);
-       document.getElementById('chk-sub').textContent = formatCOP(totalCost);
-       document.getElementById('chk-disc').textContent = '-' + formatCOP(discount);
-       document.getElementById('chk-iva').textContent = formatCOP(iva);
-       document.getElementById('chk-total').textContent = formatCOP(totalCost - discount + iva);
-    }
-    
-    // Check hash on load
-    if(window.location.hash === '#procesar') {
-        toggleCheckout(true);
-    }
-  </script>
 </body>
 </html>
